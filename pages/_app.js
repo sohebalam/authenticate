@@ -4,8 +4,9 @@ import Head from "next/head"
 import { ThemeProvider } from "@material-ui/core/styles"
 import CssBaseline from "@material-ui/core/CssBaseline"
 import theme from "../theme"
+import { wrapper } from "../redux/store"
 
-export default function MyApp(props) {
+const MyApp = (props) => {
   const { Component, pageProps } = props
 
   React.useEffect(() => {
@@ -38,3 +39,5 @@ MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
   pageProps: PropTypes.object.isRequired,
 }
+
+export default wrapper.withRedux(MyApp)

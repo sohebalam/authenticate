@@ -12,7 +12,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
 import Typography from "@material-ui/core/Typography"
 import { makeStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
-import { SignIn } from "next-auth/client"
+import { signIn } from "next-auth/client"
 import { Alert } from "@material-ui/lab"
 
 const useStyles = makeStyles((theme) => ({
@@ -39,18 +39,22 @@ const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
 
   const classes = useStyles()
 
   const submitHandler = async (e) => {
     e.preventDefault()
+    setLoading(true)
     const res = await signIn("credentials", {
       redirect: false,
       email,
       password,
     })
+    setLoading(false)
     if (res.error) {
       setError(res.error)
+      setLoading(false)
     } else {
       window.location.href = "/"
     }
@@ -93,13 +97,14 @@ const Login = () => {
               type="password"
               id="password"
               value={password}
-              autoComplete="current-password"
               onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
+            {loading && <CircularProgress />}
             <Button
               type="submit"
               fullWidth
@@ -111,7 +116,7 @@ const Login = () => {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href="/register" variant="body2">
                   Forgot password?
                 </Link>
               </Grid>
