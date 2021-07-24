@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 // import { useDispatch, useSelector } from "react-redux"
 import PersonIcon from "@material-ui/icons/Person"
 import AssignmentIcon from "@material-ui/icons/Assignment"
@@ -20,6 +20,7 @@ import {
 } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import { Alert } from "@material-ui/lab"
+import { useSelector, useDispatch } from "react-redux"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,16 +35,16 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Header = () => {
-  //   const dispatch = useDispatch()
+  const dispatch = useDispatch()
   const classes = useStyles()
 
-  //   const { user, loading } = useSelector((state) => state.loadUser)
+  const { user, loading } = useSelector((state) => state.profile)
 
-  //   useEffect(() => {
-  //     if (!user) {
-  //       dispatch(loadUser())
-  //     }
-  //   }, [dispatch, user])
+  useEffect(() => {
+    if (!user) {
+      dispatch(loadUser())
+    }
+  }, [dispatch, user])
 
   return (
     <div>
@@ -60,53 +61,57 @@ const Header = () => {
             </Typography>
 
             <>
-              {/* {userInfo ? ( */}
-              <>
-                {/* <div style={{ marginTop: "0.25rem" }}>
-                  <Button color="inherit" style={{ marginRight: "0.5rem" }}>
-                    <Link style={{ color: "white" }} href="/courses">
-                      Resources
-                    </Link>
-                  </Button>
-                </div> */}
+              {user ? (
+                <>
+                  {/* <div style={{ marginTop: "0.25rem" }}>
+                    <Button color="inherit" style={{ marginRight: "0.5rem" }}>
+                      <Link style={{ color: "white" }} href="/courses">
+                        Resources
+                      </Link>
+                    </Button>
+                  </div> */}
 
-                <div
-                  style={{
-                    marginRight: "0.25rem",
-                    marginLeft: "0.75rem",
-                    marginTop: "0.75",
-                  }}
-                >
-                  <Typography style={{ marginTop: "0.25rem" }}>
-                    {" "}
-                    {/* Hello {userInfo.firstName} {userInfo.lastName} */}
-                  </Typography>
-                </div>
-                {/* {userInfo?.isAdmin && <AdminMenu />} */}
-                <div style={{ marginTop: "0.25rem" }}>
-                  <Button color="inherit" style={{ marginRight: "0.5rem" }}>
-                    <ExitToAppIcon style={{ marginRight: "0.25rem" }} />
-                    LogOut
-                  </Button>
-                </div>
-              </>
-              {/* ) : ( */}
-              <>
-                {" "}
-                {/* <Button color="inherit">
-                  <Link style={{ color: "white" }} href="/register">
-                    <AssignmentIcon style={{ marginRight: "0.25rem" }} />
-                    Register
+                  <div
+                    style={{
+                      marginRight: "0.25rem",
+                      marginLeft: "0.75rem",
+                      marginTop: "0.75",
+                    }}
+                  >
+                    <Typography style={{ marginTop: "0.25rem" }}>
+                      {" "}
+                      Hello {user.name}
+                      {/* {user.lastName} */}
+                    </Typography>
+                  </div>
+                  {/* {user?.isAdmin && <AdminMenu />} */}
+                  <div style={{ marginTop: "0.25rem" }}>
+                    <Button
+                      color="inherit"
+                      style={{ marginRight: "0.5rem" }}
+                      onClick={() => signOut()}
+                    >
+                      <ExitToAppIcon style={{ marginRight: "0.25rem" }} />
+                      LogOut
+                    </Button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <Link href="/register">
+                    <Button color="inherit">
+                      <AssignmentIcon style={{ marginRight: "0.25rem" }} />
+                      Register
+                    </Button>
                   </Link>
-                </Button> */}
-                {/* <Button color="inherit">
-                  <Link style={{ color: "white" }} href="/login">
-                    <PersonIcon style={{ marginRight: "0.25rem" }} />
-                    Login
+                  <Link href="/login">
+                    <Button color="inherit">
+                      <PersonIcon style={{ marginRight: "0.25rem" }} />
+                      Login
+                    </Button>
                   </Link>
-                </Button> */}
-              </>
-              {/* )} */}
+                </>
+              )}
             </>
           </Toolbar>
         </AppBar>

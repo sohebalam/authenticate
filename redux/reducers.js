@@ -1,7 +1,10 @@
 import { combineReducers } from "redux"
 
-import { registerReducer } from "./userReducers"
+import { profileReducer, registerReducer } from "./userReducers"
 
-const reducer = combineReducers({ register: registerReducer })
+const reducer = combineReducers({
+  register: registerReducer,
+  profile: profileReducer,
+})
 
 export default reducer

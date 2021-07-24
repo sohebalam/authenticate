@@ -35,6 +35,7 @@ export const profileReducer = (state = { user: null }, action) => {
         loading: false,
         success: true,
         isAuthenticated: true,
+
         user: action.payload,
       }
     case LOAD_USER_FAIL:
