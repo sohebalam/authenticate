@@ -31,7 +31,6 @@ const MyApp = (props) => {
       <ThemeProvider theme={theme}>
         <Container>
           <Header />
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <Component {...pageProps} />
         </Container>
