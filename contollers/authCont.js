@@ -17,3 +17,12 @@ export const registerUser = catchAsyncErrors(async (req, res) => {
     message: "Account Registered successfully",
   })
 })
+
+export const currentUserProfile = catchAsyncErrors(async (req, res) => {
+  console.log(req.user._id)
+  const user = await User.findById(req.user._id)
+  res.status(200).json({
+    success: true,
+    user,
+  })
+})

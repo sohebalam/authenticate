@@ -5,6 +5,8 @@ import { ThemeProvider } from "@material-ui/core/styles"
 import CssBaseline from "@material-ui/core/CssBaseline"
 import theme from "../theme"
 import { wrapper } from "../redux/store"
+import Header from "../components/Header"
+import { Container } from "@material-ui/core"
 
 const MyApp = (props) => {
   const { Component, pageProps } = props
@@ -18,7 +20,7 @@ const MyApp = (props) => {
   }, [])
 
   return (
-    <React.Fragment>
+    <>
       <Head>
         <title>My page</title>
         <meta
@@ -27,11 +29,14 @@ const MyApp = (props) => {
         />
       </Head>
       <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
-        <Component {...pageProps} />
+        <Container>
+          <Header />
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <CssBaseline />
+          <Component {...pageProps} />
+        </Container>
       </ThemeProvider>
-    </React.Fragment>
+    </>
   )
 }
 

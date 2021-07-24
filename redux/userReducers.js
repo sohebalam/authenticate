@@ -1,5 +1,8 @@
 import {
   CLEAR_ERRORS,
+  LOAD_USER_FAIL,
+  LOAD_USER_REQUEST,
+  LOAD_USER_SUCCESS,
   REGISTER_USER_FAIL,
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
@@ -15,6 +18,26 @@ export const registerReducer = (
     case REGISTER_USER_SUCCESS:
       return { loading: false, success: true, message: action.payload.message }
     case REGISTER_USER_FAIL:
+      return { loading: false, error: action.payload }
+    case CLEAR_ERRORS:
+      return { ...state, error: null }
+    default:
+      return state
+  }
+}
+
+export const profileReducer = (state = { user: null }, action) => {
+  switch (action.type) {
+    case LOAD_USER_REQUEST:
+      return { loading: true }
+    case LOAD_USER_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        isAuthenticated: true,
+        user: action.payload,
+      }
+    case LOAD_USER_FAIL:
       return { loading: false, error: action.payload }
     case CLEAR_ERRORS:
       return { ...state, error: null }
