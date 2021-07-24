@@ -63,13 +63,13 @@ const Header = () => {
             <>
               {user ? (
                 <>
-                  {/* <div style={{ marginTop: "0.25rem" }}>
-                    <Button color="inherit" style={{ marginRight: "0.5rem" }}>
-                      <Link style={{ color: "white" }} href="/courses">
-                        Resources
-                      </Link>
-                    </Button>
-                  </div> */}
+                  <div style={{ marginTop: "0.25rem" }}>
+                    <Link style={{ color: "white" }} href="/profile/profile">
+                      <Button color="inherit" style={{ marginRight: "0.5rem" }}>
+                        Profile
+                      </Button>
+                    </Link>
+                  </div>
 
                   <div
                     style={{
@@ -98,13 +98,13 @@ const Header = () => {
                 </>
               ) : (
                 <>
-                  <Link href="/register">
+                  <Link href="/user/register">
                     <Button color="inherit">
                       <AssignmentIcon style={{ marginRight: "0.25rem" }} />
                       Register
                     </Button>
                   </Link>
-                  <Link href="/login">
+                  <Link href="/user/login">
                     <Button color="inherit">
                       <PersonIcon style={{ marginRight: "0.25rem" }} />
                       Login

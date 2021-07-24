@@ -1,8 +1,5 @@
 import React, { useState, useContext, useEffect } from "react"
-// import Message from "../components/Message"
 import { Grid, Button, Link, CircularProgress } from "@material-ui/core"
-// import { useDispatch, useSelector } from "react-redux"
-// import { login } from "../actions/userActions"
 import Avatar from "@material-ui/core/Avatar"
 import CssBaseline from "@material-ui/core/CssBaseline"
 import TextField from "@material-ui/core/TextField"
@@ -14,6 +11,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
 import { signIn } from "next-auth/client"
 import { Alert } from "@material-ui/lab"
+import { getSession } from "next-auth/client"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -132,4 +130,22 @@ const Login = () => {
     </>
   )
 }
+
+export async function getServerSideProps(context) {
+  const session = await getSession({ req: context.req })
+
+  if (session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
+}
+
 export default Login

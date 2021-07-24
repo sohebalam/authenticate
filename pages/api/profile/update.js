@@ -1,7 +1,8 @@
 import nc from "next-connect"
 import connectDB from "../../../connectDB"
 
-import { registerUser } from "../../../controllers/authCont"
+import { updateProfile } from "../../../controllers/authCont"
+import { isAuthenticated } from "../../../middlewares/auth"
 
 import onError from "../../../middlewares/errors"
 
@@ -9,6 +10,6 @@ const router = nc({ onError })
 
 connectDB()
 
-router.post(registerUser)
+router.use(isAuthenticated).put(updateProfile)
 
 export default router

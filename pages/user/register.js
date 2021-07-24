@@ -13,10 +13,10 @@ import { makeStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
 import { useDispatch, useSelector } from "react-redux"
 import { useRouter } from "next/router"
-import { clearErrors, userRegister } from "../redux/userActions"
+import { clearErrors, userRegister } from "../../redux/userActions"
 import { CircularProgress } from "@material-ui/core"
 import { Alert } from "@material-ui/lab"
-
+import { getSession } from "next-auth/client"
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -172,6 +172,23 @@ const Register = () => {
       </div>
     </Container>
   )
+}
+
+export async function getServerSideProps(context) {
+  const session = await getSession({ req: context.req })
+
+  if (session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
 }
 
 export default Register
