@@ -6,10 +6,11 @@ import { isAuthenticated } from "../../middlewares/auth"
 
 import onError from "../../middlewares/errors"
 
-const handler = nc({ onError })
+const router = nc({ onError })
 
 connectDB()
 
-handler.use(isAuthenticated).get(currentUserProfile)
+router.use(isAuthenticated).get(currentUserProfile)
 
-export default handler
+export default router
+// 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

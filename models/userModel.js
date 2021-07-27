@@ -28,6 +28,10 @@ const userSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  resetToken: {
+    type: String,
+    default: "",
+  },
 })
 
 const User = mongoose.models.User || mongoose.model("User", userSchema)

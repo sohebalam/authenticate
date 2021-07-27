@@ -57,7 +57,7 @@ const Register = () => {
 
   useEffect(() => {
     if (success) {
-      router.push("/login")
+      router.push("/user/login")
     }
     if (error) {
       setUserError(error)
