@@ -9,6 +9,6 @@ const router = nc({ onError })
 
 connectDB()
 
-router.post(resetPassword)
+router.put(resetPassword)
 
 export default router

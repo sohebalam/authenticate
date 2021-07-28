@@ -13,7 +13,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
 import { useDispatch, useSelector } from "react-redux"
 import { useRouter } from "next/router"
-import { clearErrors, userRegister } from "../../redux/userActions"
+import { clearErrors, passwordForgot } from "../../redux/userActions"
 import { CircularProgress } from "@material-ui/core"
 import { Alert } from "@material-ui/lab"
 import { getSession } from "next-auth/client"
@@ -37,27 +37,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Register = () => {
+const Forgot = () => {
   const [user, setUser] = useState({
-    name: "",
     email: "",
-    password: "",
   })
   const router = useRouter()
   const dispatch = useDispatch()
   const [userError, setUserError] = useState("")
   const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [name, setName] = useState("")
 
-  const register = useSelector((state) => state.register)
-  const { loading, error, success, message } = register
+  const forgotPassword = useSelector((state) => state.forgotPassword)
+  const { loading, error, success, message } = forgotPassword
 
   //   const { name, password, email } = user
 
   useEffect(() => {
     if (success) {
-      router.push("/user/login")
+      router.push("/user/reset")
     }
     if (error) {
       setUserError(error)
@@ -72,7 +68,7 @@ const Register = () => {
     }
     // console.log(userData)
     // return
-    dispatch(userRegister(userData))
+    dispatch(passwordForgot(userData))
   }
 
   const classes = useStyles()
@@ -85,37 +81,12 @@ const Register = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Forgot Password
         </Typography>
         {loading && <CircularProgress />}
         {message && <Alert severity="success">{message}</Alert>}
         <form className={classes.form} noValidate onSubmit={submitHandler}>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                autoComplete="name"
-                name="name"
-                variant="outlined"
-                required
-                fullWidth
-                id="Name"
-                label="Name"
-                autoFocus
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </Grid>
-            {/* <Grid item xs={12} sm={6}>
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              id="lastName"
-              label="Last Name"
-              name="lastName"
-              autoComplete="lname"
-            /> */}
-            {/* </Grid> */}
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -129,26 +100,6 @@ const Register = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
-            </Grid>
           </Grid>
           <Button
             type="submit"
@@ -157,14 +108,14 @@ const Register = () => {
             color="primary"
             className={classes.submit}
           >
-            Sign Up
+            Email Reset
           </Button>
           <Grid container justifyContent="flex-end">
-            <Grid item>
+            {/* <Grid item>
               <Link href="/user/login" variant="body2">
                 Already have an account? Sign in
               </Link>
-            </Grid>
+            </Grid> */}
           </Grid>
         </form>
       </div>
@@ -189,4 +140,4 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default Register
+export default Forgot

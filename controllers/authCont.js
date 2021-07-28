@@ -64,7 +64,7 @@ export const forgotPassword = async (req, res) => {
     console.log(user)
     await user.save()
 
-    const link = `${req.protocol}://localhost:3000/resetpassword/${token}`
+    const link = `${process.env.API}/user/reset/${token}`
     // HTML Message
     const message = `
       
@@ -79,7 +79,9 @@ export const forgotPassword = async (req, res) => {
         text: message,
       })
 
-      res.status(200).json({ message: `Email Sent to ${user.email}` })
+      res.status(200).json({
+        message: `Email Sent to ${user.email}, please check your email`,
+      })
     } catch (err) {
       console.log(err)
 
@@ -88,7 +90,7 @@ export const forgotPassword = async (req, res) => {
 
       await user.save()
 
-      return res.status(500).json({ messsage: "Emial could not be sent" })
+      return res.status(500).json({ messsage: "Email could not be sent" })
     }
   } catch (error) {
     console.log(error)
